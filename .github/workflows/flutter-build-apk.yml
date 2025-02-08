@@ -13,38 +13,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.13.0" # Replace with a valid stable version
+          flutter-version: "3.13.0" # Replace with the latest stable version
           cache: true
 
-      # Step 3: Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      # Step 4: Check for Android embedding v2 compatibility
-      - name: Verify Android embedding migration
+      - name: Verify migration to Android embedding v2
         run: |
           if grep -q "io.flutter.app.FlutterApplication" android/app/src/main/AndroidManifest.xml; then
-            echo "Error: The project is still using Android embedding v1. Please migrate to embedding v2.";
+            echo "Error: Android embedding v1 detected in AndroidManifest.xml";
             exit 1;
           fi
           if grep -q "GeneratedPluginRegistrant" android/app/src/main/kotlin/**/*.kt; then
-            echo "Error: The MainActivity is still using v1 methods. Ensure migration to embedding v2 is complete.";
+            echo "Error: GeneratedPluginRegistrant detected in MainActivity";
             exit 1;
           fi
 
-      # Step 5: Build APK
       - name: Build APK
         run: flutter build apk --release
 
-      # Step 6: Upload APK as an artifact
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
