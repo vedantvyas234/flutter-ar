@@ -5,8 +5,8 @@ import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({
-    @required this.selectedModel,
-    Key key,
+    required this.selectedModel,
+    Key? key,
   }) : super(key: key);
 
   final String selectedModel;
@@ -16,7 +16,7 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  ArCoreController controller;
+  late ArCoreController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _CameraScreenState extends State<CameraScreen> {
     controller.addArCoreNodeWithAnchor(
       ArCoreReferenceNode(
         name: widget.selectedModel,
-        obcject3DFileName: widget.selectedModel + ".sfb",
+        object3DFileName: widget.selectedModel + ".sfb",
         position: plane.pose.translation,
         rotation: plane.pose.rotation,
       ),

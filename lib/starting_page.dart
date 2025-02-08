@@ -9,7 +9,7 @@ import 'package:learn_ar_flutter/about_widget.dart';
 import 'package:learn_ar_flutter/strings.dart' as strings;
 
 class StartingPage extends StatefulWidget {
-  const StartingPage({Key key}) : super(key: key);
+  const StartingPage({Key? key}) : super(key: key);
 
   @override
   _StartingPageState createState() => _StartingPageState();
@@ -36,7 +36,7 @@ class _StartingPageState extends State<StartingPage> {
         centerTitle: true,
         title: Text(
           'LearnARF',
-          style: Theme.of(context).textTheme.headline3,
+          style: Theme.of(context).textTheme.displaySmall,
         ),
         actions: <Widget>[
           IconButton(
@@ -78,17 +78,16 @@ class _StartingPageState extends State<StartingPage> {
                       ],
                     ),
                   ),
-                  FlatButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
+                  ElevatedButton(
+                    
                     child: Text(
                       strings.start.toUpperCase(),
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     onPressed: () => Navigator.of(context).push(
                       CupertinoPageRoute(
                         builder: (builder) => CameraScreen(
-                          selectedModel: snapshot.data,
+                          selectedModel: snapshot.data.toString(),
                         ),
                       ),
                     ),
@@ -113,7 +112,7 @@ class _StartingPageState extends State<StartingPage> {
           borderRadius: BorderRadius.circular(500),
           border: border
               ? Border.all(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   width: 6,
                 )
               : null,
