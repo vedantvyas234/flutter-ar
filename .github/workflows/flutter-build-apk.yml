@@ -3,10 +3,10 @@ name: Build Flutter APK
 on:
   push:
     branches:
-      - main # Trigger the workflow on pushes to the "main" branch
+      - master # Trigger the workflow on pushes to the "master" branch
   pull_request: # Optional: Run on pull requests as well
     branches:
-      - main
+      - master
 
 jobs:
   build:
