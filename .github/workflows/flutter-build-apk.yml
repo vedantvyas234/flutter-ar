@@ -28,11 +28,23 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Step 4: Build APK
+      # Step 4: Check for Android embedding v2 compatibility
+      - name: Verify Android embedding migration
+        run: |
+          if grep -q "io.flutter.app.FlutterApplication" android/app/src/main/AndroidManifest.xml; then
+            echo "Error: The project is still using Android embedding v1. Please migrate to embedding v2.";
+            exit 1;
+          fi
+          if grep -q "GeneratedPluginRegistrant" android/app/src/main/kotlin/**/*.kt; then
+            echo "Error: The MainActivity is still using v1 methods. Ensure migration to embedding v2 is complete.";
+            exit 1;
+          fi
+
+      # Step 5: Build APK
       - name: Build APK
         run: flutter build apk --release
 
-      # Step 5: Upload APK as an artifact
+      # Step 6: Upload APK as an artifact
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
